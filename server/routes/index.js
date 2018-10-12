@@ -19,7 +19,7 @@ router.use(function(req, res, next) {
 
 router.use(cors());
 
-const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
+const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 
 const LendBytecode = require('../../BlockChain/build/contracts/Lend.json')
 const Buyer = LendBytecode.bytecode;
