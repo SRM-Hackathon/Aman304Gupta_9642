@@ -56,22 +56,18 @@ function get_lenders_count() public view returns(uint256) {
     function seeLoanRequest(uint256 _id) public view returns(uint256) {
         return LoanRequest[_id]._value;
     }
-
 // approve request -- and transfer tokens
     function setLoanTerms(uint256 _id, uint256 period, uint256 Rinterest) public  returns(bool success) {
       LoanRequest[_id].Lender = msg.sender;
       LoanRequest[_id]._period = period;
       LoanRequest[_id]._Rinterest = Rinterest;
-
-      uint256 borrowId = BuyAddtoId[borrower];
+      /* uint256 borrowId = BuyAddtoId[borrower]; */
       uint256 lenderId = LendAddtoId[msg.sender];
 
       uint256 valueToBeSent = LoanRequest[_id]._value;
 
       lenders[lenderId].amt_have -= valueToBeSent;
-      borrowers[borrowId].amt_have += valueToBeSent;
+      borrowers[_id].amt_have += valueToBeSent;
       return true;
     }
-
-
 }
