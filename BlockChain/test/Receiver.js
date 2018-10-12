@@ -31,7 +31,6 @@ contract("Receiver", function(accounts) {
     })
   })
 
-
   it("displays buyer", function() {
      return Receiver.deployed().then(function(instance) {
        receiverInstance = instance;
@@ -46,11 +45,11 @@ contract("Receiver", function(accounts) {
        assert.equal(receipt[5],100,"amt displayed");
      });
 });
-  //
+//   //
   it("creates Loan Request", function() {
     return Receiver.deployed().then(function(instance) {
       receiverInstance = instance;
-      return receiverInstance.createLoanRequest.call(10);
+      return receiverInstance.createLoanRequest.call(0,10);
     }).then(function(success) {
       assert.equal(success, true,"sets as true");
       return receiverInstance.createLoanRequest(0,10);
