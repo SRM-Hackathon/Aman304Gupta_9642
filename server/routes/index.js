@@ -258,7 +258,6 @@ router.post('/loanterms/create',(req,res) => { // working
      res.status(403).send({success: false})
   });
 
-
 })
 
 router.post('/borrower/list/add',(req,res) => { // working
@@ -351,7 +350,6 @@ module.exports = router;
 
 ipfs
 automation
-get lender of a borrower
 
 */
  
