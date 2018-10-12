@@ -72,28 +72,45 @@ router.post('/signup',(req,res) => {
 
 })
 
-router.post('/borrower/create',(req,res) => {
+router.post('/lender/create',(req,res) => {
 
-  web3.eth.getAccounts().then(accounts => {
-      
-      console.log(accounts);
+	LendContract.methods.createLender(
+		req.body.name,
+		req.body.linkedInURL, 
+		req.body.amount).call({from: fromAccount})
+    .then(function(receipt){
 
-      db.User_Details.countDocuments({}).then(function(count){
-        console.log(count)
-        db.User_Details.create({
-          username: req.body.username,
-          email: req.body.email,
-          meterId: req.body.meterId,
-          walletAddress: accounts[count+1]
-        }).then(function(data){
-          res.send({walletAddress:data.walletAddress , success: true})
-        }).catch(function(err){ 
-             res.send({success: false})
-        })
-            
-      })
-   
-   })
+    	if(!receipt) {
+    		return res.send({message: 'No receipt generate',success: false})
+    	}
+
+    	console.log(receipt);
+    	res.send({success: true})           
+       
+    }).catch(function(err){
+      console.log(err)
+       res.send({success: false})
+    });
+
+})
+
+router.post('/lender/get/:address',(req,res) => {
+
+	LendContract.methods.getLender(
+		req.params.address).call({from: fromAccount})
+    .then(function(receipt){
+
+    	if(!receipt) {
+    		return res.send({message: 'No receipt generate',success: false})
+    	}
+
+    	console.log(receipt);
+    	res.send({success: true})           
+       
+    }).catch(function(err){
+      console.log(err)
+       res.send({success: false})
+    });
 
 })
 
