@@ -53,4 +53,43 @@ contract("Lender", function(accounts) {
           assert.equal(count, 1);
         })
       })
+
+      it("see loan request ", function() {
+        return Lend.deployed().then(function(instance) {
+          lenderInstance = instance;
+          return lenderInstance.createLoanRequest(10,{from:accounts[0]});
+       }).then(function(receipt) {
+         return lenderInstance.seeLoanRequest(accounts[0]);
+       }).then(function(receipt) {
+         console.log(receipt);
+         assert.equal(receipt.toNumber(), 10)
+       })
+
+     });
+
+     it("see loan terms ", function() {
+       return Lend.deployed().then(function(instance) {
+         lenderInstance = instance;
+       return lenderInstance.setLoanTerms.call(accounts[0], 1, 5, {from:accounts[1]})
+     }).then(function(success) {
+       assert.equal(success, true, "trie set");
+       return lenderInstance.setLoanTerms(accounts[0], 1, 5, {from:accounts[1]})
+     }).then(function(receipt) {
+       return lenderInstance.LoanRequest(accounts[0]);
+     }).then(function(loan) {
+       assert.equal(loan[0], accounts[0],"addres of borrower");
+       assert.equal(loan[1], accounts[1], "no lender assigned yet");
+       assert.equal(loan[2].toNumber(), 10)
+       assert.equal(loan[3].toNumber(), 1)
+       assert.equal(loan[4].toNumber(), 5)
+       return lenderInstance.lenders(0);
+     }).then(function(lender) {
+       console.log(lender);
+       assert.equal(lender[3].toNumber(), 90, "value checke");
+       return lenderInstance.borrowers(0);
+     }).then(function(borrower) {
+       console.log(borrower);
+       assert.equal(borrower[5], 110, "value checked");
+     })
+   })
   });

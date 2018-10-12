@@ -46,5 +46,26 @@ contract("Receiver", function(accounts) {
        assert.equal(receipt[5],100,"amt displayed");
      });
 });
+  //
+  it("creates Loan Request", function() {
+    return Receiver.deployed().then(function(instance) {
+      receiverInstance = instance;
+      return receiverInstance.createLoanRequest.call(10);
+    }).then(function(success) {
+      assert.equal(success, true,"sets as true");
+      return receiverInstance.createLoanRequest(10);
+    }).then(function(receipt) {
+      return receiverInstance.LoanRequest(accounts[0]);
+    }).then(function(loan) {
+      // console.log(loan);
+      assert.equal(loan[0], accounts[0],"addres of borrower");
+      assert.equal(loan[1], 0x0, "no lender assigned yet");
+      assert.equal(loan[2].toNumber(), 10)
+      assert.equal(loan[3].toNumber(), 0)
+      assert.equal(loan[4].toNumber(), 0)
+
+    })
+  })
+
 
 })

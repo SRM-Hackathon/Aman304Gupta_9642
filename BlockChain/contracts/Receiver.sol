@@ -45,5 +45,12 @@ mapping(address => uint256) public BuyAddtoId;
     return (borrowers[_id].name, borrowers[_id].StartUpName, borrowers[_id].StartUpIdea, borrowers[_id].LinkedInUrl, borrowers[_id].BorroweAddress,borrowers[_id].amt_have);
   }
 
+  // create a loan request --
+  // called by a borrower
+  function createLoanRequest(uint256 _value) public payable returns( bool success) {
+    /* uint256 _id = BuyAddtoId[msg.sender]; */
+    LoanRequest[msg.sender] = Loan(msg.sender,address(0),_value,0,0);
+    return true;
+  }
 
 }
