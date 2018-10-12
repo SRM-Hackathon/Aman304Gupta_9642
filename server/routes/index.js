@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require("../models/user");
+const Borrow = require("../models/borrow");
 const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -12,7 +13,7 @@ router.use(function(req, res, next) {
     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.header('Access-Control-Allow-Origin', 'http://localhost:7000');
-    res.header('Access-Control-Allow-Origin', 'http://localhost:7545');
+    res.header('Access-Control-Allow-Origin', 'http://localhost:8545');
     res.header('Access-Control-Allow-Credentials', true);
     next();
 });
@@ -26,7 +27,7 @@ const Buyer = LendBytecode.bytecode;
 const LenderABI = LendBytecode.abi;
 
 var fromAccount = web3.eth.accounts[0];
-const Lend_contract_address = "0x0047280aef87728e0cfa203eb5dd18f84e1fe5b6"
+const Lend_contract_address = "0xf2d4ba08de85221f31dcb70a24028b6007845ce8"
 
 const LendContract = new web3.eth.Contract(
     LenderABI, 
@@ -133,6 +134,16 @@ router.post('/loan/create',(req,res) => { // working
         return res.send({message: 'No receipt generate',success: false})
       }
 
+      // Borrow.findOne({id: req.body.id}).then(function(data){
+      //   if(data) {
+
+
+
+      //   } else {
+
+      //   }
+      // })
+
       console.log(receipt);
       res.send({success: true})           
        
@@ -143,7 +154,7 @@ router.post('/loan/create',(req,res) => { // working
 
 })
 
-router.post('/seeLoanRequest/get/:id',(req,res) => {
+router.post('/seeLoanRequest/get/:id',(req,res) => { // working
 
   LendContract.methods.seeLoanRequest(
     req.params.id).call({from: fromAccount})
@@ -213,7 +224,7 @@ router.post('/lender/create',(req,res) => { // working
 
 })
 
-router.post('/lender/get/:id',(req,res) => {
+router.post('/lender/get/:id',(req,res) => { // working
 
 	LendContract.methods.getLenderviaId(
 		req.params.id).call({from: fromAccount})
@@ -233,12 +244,59 @@ router.post('/lender/get/:id',(req,res) => {
 
 })
 
-router.post('/check',(req,res) => {
+router.post('/loanterms/create',(req,res) => { // working
+
+  var userid = req.body.userid;
+  var period = req.body.period;
+  var Rinterest = req.body.Rinterest;
+
+  LendContract.methods.setLoanTerms(
+    userid,
+    period, 
+    Rinterest).send({from: fromAccount,gasPrice: '20000000000',gas: 1500000})
+  .then(function(receipt){
+
+    if(!receipt) {
+      return res.send({message: 'No receipt generate',success: false})
+    }
+
+    console.log(receipt);
+    res.send({success: true})           
+     
+  }).catch(function(err){
+    console.log(err)
+     res.status(403).send({success: false})
+  });
+
+
+})
+
+router.post('/lender/getby/:address',(req,res) => { // working
+  
+  LendContract.methods.getLender(
+    req.params.address).call({from: fromAccount})
+    .then(function(receipt){
+
+      if(!receipt) {
+        return res.send({message: 'No receipt generate',success: false})
+      }
+
+      console.log(receipt);
+      res.send({success: true,data: receipt})           
+       
+    }).catch(function(err){
+      console.log(err)
+       res.send({success: false})
+    });
+
+})
+
+router.post('/check',(req,res) => { // working
 	console.log(LendContract)
 	res.send({success: true})
 })
 
-router.post('/test',(req,res) => {
+router.post('/test',(req,res) => { // working
 
   LendContract.methods.get_borrowers_count().call({from: fromAccount})
     .then(function(receipt){
@@ -253,20 +311,29 @@ router.post('/test',(req,res) => {
 
 })
 
-router.post('*',(req,res) => {
+
+
+router.post('*',(req,res) => { // working 
+ 
+  res.status(403).send({success: false,message: 'Does not exist'})
+
+});
+
+router.delete('*',(req,res) => { // working
+  
   res.status(403).send({success: false,message: 'Does not exist'})
 });
 
-router.delete('*',(req,res) => {
+router.put('*',(req,res) => { // working
+ 
   res.status(403).send({success: false,message: 'Does not exist'})
+
 });
 
-router.put('*',(req,res) => {
+router.get('*',(req,res) => { // working
+ 
   res.status(403).send({success: false,message: 'Does not exist'})
-});
 
-router.get('*',(req,res) => {
-  res.status(403).send({success: false,message: 'Does not exist'})
 });
 
 
@@ -276,6 +343,7 @@ module.exports = router;
 
 ipfs
 automation
+get lender of a borrower
 
 */
  

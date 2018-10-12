@@ -25,10 +25,11 @@ public class BuyerFragment extends Fragment {
 
     }
     Boolean success;
-    String count,s1,s2,s3,s4,s5,s6;
+    String count,s1,s2,s3,s4,s5,s6,id;
     int count_int;
     RecyclerView recyclerView;
     productAdapter adapter;
+    int i;
     List<borrower> borrowersList;
 
 
@@ -130,20 +131,21 @@ public class BuyerFragment extends Fragment {
                             .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
                             .build();
                     borrowerApi api1=retrofit1.create(borrowerApi.class);
-                    for(int i=0;i<count_int;i++)
+                    for(i=0;i<count_int;i++)
                     {
                         Call<borrowerPojo> call1 = api1.getBorrower(i);
                         call1.enqueue(new Callback<borrowerPojo>() {
                             @Override
                             public void onResponse(Call<borrowerPojo> call, Response<borrowerPojo> response) {
                                 borrowerPojo borrowerPojo=response.body();
+                                id=String.valueOf(i);
                                 s1=borrowerPojo.getData().get0();
                                 s2=borrowerPojo.getData().get1();
                                 s3=borrowerPojo.getData().get2();
                                 s4=borrowerPojo.getData().get3();
                                 s5=borrowerPojo.getData().get4();
                                 s6=borrowerPojo.getData().get5();
-                                borrowersList.add(new borrower(s1,s2,s3,s4,s5,s6));
+                                borrowersList.add(new borrower(s1,s2,s3,s4,s5,s6,id));
                                 adapter=new productAdapter(getActivity().getApplicationContext(),borrowersList);//getActivity();
                                 recyclerView.setAdapter(adapter);
 

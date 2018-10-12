@@ -16,9 +16,12 @@ import android.widget.Toast;
 /*seller*/
 
 import com.orhanobut.hawk.Hawk;
+import com.ramotion.fluidslider.FluidSlider;
 
 import java.util.List;
 
+import kotlin.Unit;
+import kotlin.jvm.functions.Function0;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,6 +31,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class productAdapter extends RecyclerView.Adapter<productAdapter.ProductViewHolder> {
     private Context mcx;
     private List<borrower> borrowerList;
+    int quantity;
 
     public productAdapter(Context mcx, List<borrower> borrowerList) {
         this.mcx = mcx;
@@ -46,21 +50,20 @@ public class productAdapter extends RecyclerView.Adapter<productAdapter.ProductV
     }
 
     @Override
-    public void onBindViewHolder(final ProductViewHolder holder, int position) {
+    public void onBindViewHolder(ProductViewHolder holder, int position) {
          borrower borrower=borrowerList.get(position);
         holder.textViewUsername.setText(borrower.getS1());
         holder.textQuantity.setText(borrower.getS2());
 //        int price=Integer.parseInt(seller.getQuantity())*5;
         holder.textViewPrice.setText(borrower.getS3());
-       /* holder.buy.setOnClickListener(new View.OnClickListener() {
+        holder.buy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final Dialog dialog=new Dialog(mcx);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.dialog_buy);
-                Button confirm=dialog.findViewById(R.id.confirm_button);
-                final EditText resident_address=dialog.findViewById(R.id.resident_address);
-                confirm.setOnClickListener(new View.OnClickListener() {
+                Button lend_button=dialog.findViewById(R.id.lend_button);
+                lend_button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Hawk.init(mcx).build();
@@ -70,7 +73,33 @@ public class productAdapter extends RecyclerView.Adapter<productAdapter.ProductV
                                 .build();
                         buyApi api=retrofit.create(buyApi.class);
                         User user =Hawk.get("user");
-                        Call<SuccessResponse> call=api.getResponse(seller.getAddress(),Integer.parseInt(seller.getQuantity()),user.getWallet_address(),resident_address.getText().toString());
+                        final int max = Integer.parseInt(borrower.getS6());
+                        final int min = 10;
+                        final int total = max - min;
+
+                        final FluidSlider slider = dialog.findViewById(R.id.slider_lend);
+                        slider.setBeginTrackingListener(new Function0<Unit>() {
+                            @Override
+                            public Unit invoke() {
+                                return Unit.INSTANCE;
+                            }
+                        });
+
+                        slider.setEndTrackingListener(new Function0<Unit>() {
+                            @Override
+                            public Unit invoke() {
+                                return Unit.INSTANCE;
+                            }
+                        });
+
+                        // Java 8 lambda
+                        slider.setPositionListener(pos -> {
+                            final String value = String.valueOf((int) (min + total * pos));
+                            slider.setBubbleText(value);
+                            quantity= Integer.parseInt(value);
+                            return Unit.INSTANCE;
+                        });
+                        Call<SuccessResponse> call=api.getResponse(borrower.getId(),quantity);
                         call.enqueue(new Callback<SuccessResponse>() {
                             @Override
                             public void onResponse(Call<SuccessResponse> call, Response<SuccessResponse> response) {
@@ -78,21 +107,6 @@ public class productAdapter extends RecyclerView.Adapter<productAdapter.ProductV
                                 SuccessResponse successResponse=response.body();
                                 if(successResponse.getSuccess())
                                     Toast.makeText(mcx,"Ordered!!",Toast.LENGTH_LONG).show();
-
-                                holder.escro_card.setVisibility(View.VISIBLE);
-                                holder.no_button.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        Toast.makeText(mcx,"You will get back your Ethereum soon!!",Toast.LENGTH_LONG);
-                                        holder.escro_card.setVisibility(View.GONE);
-                                    }
-                                });
-                                holder.yes_button.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        holder.escro_card.setVisibility(View.GONE);
-                                    }
-                                });
                                 dialog.dismiss();
                                 //now we can do whatever we want with this list
 
@@ -106,16 +120,9 @@ public class productAdapter extends RecyclerView.Adapter<productAdapter.ProductV
                         });
                     }
                 });
-                Button close=dialog.findViewById(R.id.close_button);
-                close.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
                 dialog.show();
             }
-        });*/
+        });
 
     }
 
@@ -127,8 +134,7 @@ public class productAdapter extends RecyclerView.Adapter<productAdapter.ProductV
     class ProductViewHolder extends RecyclerView.ViewHolder{
 
         TextView textViewUsername,textQuantity,textViewPrice;
-        Button buy,yes_button,no_button;
-        CardView escro_card;
+        Button buy;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
@@ -136,9 +142,6 @@ public class productAdapter extends RecyclerView.Adapter<productAdapter.ProductV
             textQuantity=itemView.findViewById(R.id.quantity);
             textViewPrice=itemView.findViewById(R.id.price);
             buy=itemView.findViewById(R.id.buy_button);
-            escro_card=itemView.findViewById(R.id.escro_card);
-            yes_button=itemView.findViewById(R.id.yes_button);
-            no_button=itemView.findViewById(R.id.no_button);
         }
     }
 }
