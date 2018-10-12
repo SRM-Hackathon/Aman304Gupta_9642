@@ -46,17 +46,22 @@ function getLenderviaId(uint256 _id) public view
 // see loan request -- from borrower's id -- but only see who is requesting loan
 
 function get_borrowers_count() public view returns(uint256) {
- 
+
   return borrowers.length;
 }
 
 function get_lenders_count() public view returns(uint256) {
-  
+
   return lenders.length;
 }
 
+function get_loaners_count() public view returns(uint256) {
+
+  return loanersCount;
+}
+
 function seeLoanRequest(uint256 _id) public view returns(uint256) {
-    
+
     return LoanRequest[_id]._value;
 }
 // approve request -- and transfer tokens

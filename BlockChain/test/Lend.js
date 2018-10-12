@@ -79,6 +79,18 @@ it("lenders count", function() {
   })
 })
 
+it("loaners count", function() {
+  return Lend.deployed().then(function(instance) {
+    lenderInstance = instance;
+    return lenderInstance.createLoanRequest(0,10,{from:accounts[0]});
+  }).then(function(receipt) {
+    return lenderInstance.get_loaners_count();
+  }).then(function(count) {
+    console.log(count);
+    assert.equal(count, 1);
+  })
+})
+
 it("see loan request ", function() {
   return Lend.deployed().then(function(instance) {
     lenderInstance = instance;
