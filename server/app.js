@@ -8,6 +8,12 @@ var User = require("./models/user");
 
 var indexRouter = require('./routes/index');
 
+mongoose.connect('mongodb://localhost/blockpal', { useNewUrlParser: true }).then(function(data){
+	console.log("database set up")
+}).catch(function(err) {
+	console.log(err)
+});
+
 var app = express();
 
 app.use(logger('dev'));
