@@ -247,5 +247,22 @@ router.post('/test',(req,res) => {
 
 })
 
+router.post('*',(req,res) => {
+  res.status(403).send({success: false,message: 'Does not exist'})
+});
+
+router.delete('*',(req,res) => {
+  res.status(403).send({success: false,message: 'Does not exist'})
+});
+
+router.put('*',(req,res) => {
+  res.status(403).send({success: false,message: 'Does not exist'})
+});
+
+router.get('*',(req,res) => {
+  res.status(403).send({success: false,message: 'Does not exist'})
+});
+
+
 module.exports = router;
  
