@@ -24,29 +24,38 @@ router.post('/user/create',(req,res) => {
     
 });
 
-router.post('/user/get/:id?',(req,res) =>{
-	if(!req.params._id){
-		User.find({}, function(err,user) =>{
-			if(err){
-				res.send({success:false});
-				console.log(err);
-			}
-			else{
-				res.send({success:true}, user:user)
-			}
-		})
-	}
-	else{
-		User.findbyId(req.params._id, function(err,user) =>{
-			if(err){
-				res.send({success:false});
-				console.log(err);
-			}
-			else{
-				res.send({success:true, user:user})
-			}
-	})
-	}
+router.post('/user/get/:id?',(req,res) => {
+
+	 if (!req.params.id) {
+
+        User.find({}, (err, item) => {
+            if (err) {
+                res.send({ success: false });
+                return console.error(err);
+            } else {
+             res.send({ success: true, data: item });
+            }
+        });
+
+    }
+
+    else {
+
+       User.findOne({ _id: req.params.id }, (err, item) => {
+        if (!item) {
+            res.status(404).send({ success: false, message: 'User Id does not exists' });
+            console.log("success");
+        } else if(err) {
+            console.log("error");
+            res.status(404).send({ success: false });
+            return console.error(err);
+        } else {
+            res.send({ success: true, data: item });
+            console.log("success");
+        }
+    });
+
+   }
 	
 })
 
