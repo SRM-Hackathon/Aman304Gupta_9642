@@ -36,6 +36,8 @@ contract Lend is Receiver { // Receiver import to see borrowers and loan request
 }
 // see loan request -- from borrower's id -- but only see who is requesting loan
 
-
+function get_borrowers_count() public view returns(uint256) {
+  return borrowers.length;
+}
 
 }

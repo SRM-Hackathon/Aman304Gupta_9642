@@ -42,4 +42,15 @@ contract("Lender", function(accounts) {
        });
 });
 
+      it("borrowers count", function() {
+        return Lend.deployed().then(function(instance) {
+          lenderInstance = instance;
+          return lenderInstance.createBorrower("Aman","WebArch","BlockPal","abc",amtB,{from:accounts[0]});
+        }).then(function(receipt) {
+          return lenderInstance.get_borrowers_count();
+        }).then(function(count) {
+          console.log(count);
+          assert.equal(count, 1);
+        })
+      })
   });

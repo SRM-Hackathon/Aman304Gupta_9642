@@ -32,5 +32,19 @@ contract("Receiver", function(accounts) {
   })
 
 
+  it("displays buyer", function() {
+     return Receiver.deployed().then(function(instance) {
+       receiverInstance = instance;
+       return receiverInstance.getBorrower(accounts[0]);
+     }).then(function(receipt) {
+       console.log(receipt);
+       assert.equal(receipt[0],"Aman","set as Aman");
+       assert.equal(receipt[1],"WebArch","set startuo");
+       assert.equal(receipt[2],"BlockPal","project Name");
+       assert.equal(receipt[3],"abc","linkedin");
+       assert.equal(receipt[4],accounts[0],"account set");
+       assert.equal(receipt[5],100,"amt displayed");
+     });
+});
 
 })
