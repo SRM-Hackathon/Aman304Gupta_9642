@@ -26,7 +26,7 @@ const Buyer = LendBytecode.bytecode;
 const LenderABI = LendBytecode.abi;
 
 var fromAccount = web3.eth.accounts[0];
-const Lend_contract_address = "0x7c17798fa996e62f6a0195b182099e971922d254"
+const Lend_contract_address = "0x0047280aef87728e0cfa203eb5dd18f84e1fe5b6"
 
 const LendContract = new web3.eth.Contract(
     LenderABI, 
@@ -102,14 +102,6 @@ router.post('/borrower/get/:id',(req,res) => { // working
             
             console.log(JSON.stringify(v))
             res.send({success: true,data: v})
-            
-            // db.User_Details.findOne({walletAddress: a.seller}).then(function(data){
-            //   if(!data) {
-            //     res.send({success: false,message: "Wallet Address Does not exists"})
-            //   }
-            //   else
-            //   {res.send({walletAddress: data.walletAddress , supply: a.supply ,username:  data.username})}
-            // })
     }).catch(function(err){
       res.send({success: false})
       console.error(err)
@@ -171,6 +163,34 @@ router.post('/seeLoanRequest/get/:id',(req,res) => {
 
 })
 
+router.post('/loan/count',(req,res) => { // working
+  
+   LendContract.methods.get_loaners_count().call({from: fromAccount})
+    .then(function(receipt){
+       
+       res.send({success: true,count: receipt})     
+        
+       
+    }).catch(function(err){
+      console.log(err)
+       res.send({success: false})
+    });
+})
+
+router.post('/lender/count',(req,res) => { // working
+  
+   LendContract.methods.get_lenders_count().call({from: fromAccount})
+    .then(function(receipt){
+       
+       res.send({success: true,count: receipt})     
+        
+       
+    }).catch(function(err){
+      console.log(err)
+       res.send({success: false})
+    });
+})
+
 router.post('/lender/create',(req,res) => { // working
 
   LendContract.methods.createLender(
@@ -191,20 +211,6 @@ router.post('/lender/create',(req,res) => { // working
      res.send({success: false})
   });
 
-})
-
-router.post('/lender/count',(req,res) => { // working
-	
-	 LendContract.methods.get_lenders_count().call({from: fromAccount})
-    .then(function(receipt){
-       
-       res.send({success: true,count: receipt})     
-        
-       
-    }).catch(function(err){
-      console.log(err)
-       res.send({success: false})
-    });
 })
 
 router.post('/lender/get/:id',(req,res) => {
@@ -265,4 +271,11 @@ router.get('*',(req,res) => {
 
 
 module.exports = router;
+
+/*
+
+ipfs
+automation
+
+*/
  
