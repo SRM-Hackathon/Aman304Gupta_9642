@@ -134,16 +134,6 @@ router.post('/loan/create',(req,res) => { // working
         return res.send({message: 'No receipt generate',success: false})
       }
 
-      // Borrow.findOne({id: req.body.id}).then(function(data){
-      //   if(data) {
-
-
-
-      //   } else {
-
-      //   }
-      // })
-
       console.log(receipt);
       res.send({success: true})           
        
@@ -268,6 +258,15 @@ router.post('/loanterms/create',(req,res) => { // working
      res.status(403).send({success: false})
   });
 
+
+})
+
+router.post('/borrower/list/add',(req,res) => { // working
+
+  Borrow.update({ id: req.body.userid }, { $push: { lenders: req.body.lenderaddress } }).then(function(data) {
+            console.log("lender address pushed");
+            res.send({ success: true })
+  });
 
 })
 
