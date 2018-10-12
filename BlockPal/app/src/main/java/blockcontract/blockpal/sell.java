@@ -115,7 +115,7 @@ public class sell extends Fragment {
 
             }
         });
-        Retrofit retrofit1 = new Retrofit.Builder()
+       /* Retrofit retrofit1 = new Retrofit.Builder()
                 .baseUrl(buyersApi.Base_Url)
                 .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
                 .build();
@@ -147,7 +147,7 @@ public class sell extends Fragment {
             public void onFailure(Call<BuyersResponse> call, Throwable t) {
                 //Toast.makeText(getContext(),"No buyers",Toast.LENGTH_LONG).show();
             }
-        });
+        });*/
 
         return view;
 
