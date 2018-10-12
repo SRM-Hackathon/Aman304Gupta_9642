@@ -62,7 +62,9 @@ contract("Receiver", function(accounts) {
       assert.equal(loan[2].toNumber(), 10)
       assert.equal(loan[3].toNumber(), 0)
       assert.equal(loan[4].toNumber(), 0)
-
+      return receiverInstance.loanersCount();
+    }).then(function(count) {
+      assert.equal(count, 1, "count is correct");
     })
   })
 
