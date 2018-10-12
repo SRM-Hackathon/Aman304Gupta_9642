@@ -22,6 +22,32 @@ router.post('/user/create',(req,res) => {
       res.send({success: false})
     })
     
+});
+
+router.post('/user/get/:id?',(req,res) =>{
+	if(!req.params._id){
+		User.find({}, function(err,user) =>{
+			if(err){
+				res.send({success:false});
+				console.log(err);
+			}
+			else{
+				res.send({success:true}, user:user)
+			}
+		})
+	}
+	else{
+		User.findbyId(req.params._id, function(err,user) =>{
+			if(err){
+				res.send({success:false});
+				console.log(err);
+			}
+			else{
+				res.send({success:true, user:user})
+			}
+	})
+	}
+	
 })
 
 module.exports = router;
