@@ -29,6 +29,7 @@ mapping(address => uint256) public BuyAddtoId;
     // address of borrower to each loan
   mapping(uint256 => Loan) public LoanRequest;
   Borrower[] public borrowers; // Array for storing all borrowers
+  uint256 public loanersCount;
 
   // create a borrower
   function createBorrower(string _name, string _StartUpName, string _StartUpIdea, string _LinkedInUrl, uint256 _amt) public returns(bool success) {
@@ -50,6 +51,7 @@ mapping(address => uint256) public BuyAddtoId;
   function createLoanRequest(uint256 _id,uint256 _value) public payable returns( bool success) {
     /* uint256 _id = BuyAddtoId[msg.sender]; */
     LoanRequest[_id] = Loan(msg.sender,address(0),_value,0,0);
+    loanersCount += 1;
     return true;
   }
 
