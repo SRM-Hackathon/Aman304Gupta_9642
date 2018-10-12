@@ -6,11 +6,9 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
 public interface buyApi {
-    String BASE_URL="http://13.126.150.180:3000/";
+    String BASE_URL="http://13.233.83.25:7000/";
     @FormUrlEncoded
-    @POST("buyFrom")
-    Call<SuccessResponse> getResponse(@Field("sellerAddress") String sellerAddress,
-                                      @Field("value") int value,
-                                      @Field("wallet") String wallet,
-                                      @Field("resident_address") String address);
+    @POST("/loan/create")
+    Call<SuccessResponse> getResponse(@Field("id") String id,
+                                      @Field("value") int value);
 }
