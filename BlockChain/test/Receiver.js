@@ -32,5 +32,40 @@ contract("Receiver", function(accounts) {
   })
 
 
+  it("displays buyer", function() {
+     return Receiver.deployed().then(function(instance) {
+       receiverInstance = instance;
+       return receiverInstance.getBorrower(accounts[0]);
+     }).then(function(receipt) {
+       console.log(receipt);
+       assert.equal(receipt[0],"Aman","set as Aman");
+       assert.equal(receipt[1],"WebArch","set startuo");
+       assert.equal(receipt[2],"BlockPal","project Name");
+       assert.equal(receipt[3],"abc","linkedin");
+       assert.equal(receipt[4],accounts[0],"account set");
+       assert.equal(receipt[5],100,"amt displayed");
+     });
+});
+  //
+  it("creates Loan Request", function() {
+    return Receiver.deployed().then(function(instance) {
+      receiverInstance = instance;
+      return receiverInstance.createLoanRequest.call(10);
+    }).then(function(success) {
+      assert.equal(success, true,"sets as true");
+      return receiverInstance.createLoanRequest(10);
+    }).then(function(receipt) {
+      return receiverInstance.LoanRequest(accounts[0]);
+    }).then(function(loan) {
+      // console.log(loan);
+      assert.equal(loan[0], accounts[0],"addres of borrower");
+      assert.equal(loan[1], 0x0, "no lender assigned yet");
+      assert.equal(loan[2].toNumber(), 10)
+      assert.equal(loan[3].toNumber(), 0)
+      assert.equal(loan[4].toNumber(), 0)
+
+    })
+  })
+
 
 })
