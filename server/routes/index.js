@@ -26,7 +26,7 @@ const Buyer = LendBytecode.bytecode;
 const LenderABI = LendBytecode.abi;
 
 var fromAccount = web3.eth.accounts[0];
-const Lend_contract_address = "0x115d647dd4886949e183fa541bccd78f736a60d1"
+const Lend_contract_address = "0x0819d12eed6788c7d744976c76e079ad4e04c120"
 
 const LendContract = new web3.eth.Contract(
     LenderABI, 
@@ -94,6 +94,20 @@ router.post('/lender/create',(req,res) => {
 
 })
 
+router.post('/lender/count',(req,res) => {
+	
+	 LendContract.methods.get_lenders_count().call({from: fromAccount})
+    .then(function(receipt){
+       
+       res.send({success: true,count: receipt})     
+        
+       
+    }).catch(function(err){
+      console.log(err)
+       res.send({success: false})
+    });
+})
+
 router.post('/lender/get/:address',(req,res) => {
 
 	LendContract.methods.getLender(
@@ -148,6 +162,11 @@ router.post('/user/get/:id?',(req,res) => {
 	   }
 	
 });
+
+router.post('/check',(req,res) => {
+	console.log(LendContract)
+	res.send({success: true})
+})
 
 router.post('/test',(req,res) => {
 
