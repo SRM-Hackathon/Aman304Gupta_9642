@@ -114,28 +114,21 @@ router.post('/borrower/get/:id',(req,res) => { // working
       res.send({success: false})
       console.error(err)
     })
+
 })
 
-router.post('/lender/create',(req,res) => {
-
-	LendContract.methods.createLender(
-		req.body.name,
-		req.body.linkedInURL, 
-		req.body.amount).call({from: fromAccount})
+router.post('/borrower/count',(req,res) => { // working
+  
+   LendContract.methods.get_borrowers_count().call({from: fromAccount})
     .then(function(receipt){
-
-    	if(!receipt) {
-    		return res.send({message: 'No receipt generate',success: false})
-    	}
-
-    	console.log(receipt);
-    	res.send({success: true})           
+       
+       res.send({success: true,count: receipt})     
+        
        
     }).catch(function(err){
       console.log(err)
        res.send({success: false})
     });
-
 })
 
 router.post('/loan/create',(req,res) => { // working
@@ -158,7 +151,49 @@ router.post('/loan/create',(req,res) => { // working
 
 })
 
-router.post('/lender/count',(req,res) => {
+router.post('/seeLoanRequest/get/:id',(req,res) => {
+
+  LendContract.methods.seeLoanRequest(
+    req.params.id).call({from: fromAccount})
+    .then(function(receipt){
+
+      if(!receipt) {
+        return res.send({message: 'No receipt generate',success: false})
+      }
+
+      console.log(receipt);
+      res.send({success: true,data: receipt})           
+       
+    }).catch(function(err){
+      console.log(err)
+       res.send({success: false})
+    });
+
+})
+
+router.post('/lender/create',(req,res) => { // working
+
+  LendContract.methods.createLender(
+    req.body.name,
+    req.body.linkedInURL, 
+    req.body.amount).send({from: fromAccount,gasPrice: '20000000000',gas: 1500000})
+  .then(function(receipt){
+
+    if(!receipt) {
+      return res.send({message: 'No receipt generate',success: false})
+    }
+
+    console.log(receipt);
+    res.send({success: true})           
+     
+  }).catch(function(err){
+    console.log(err)
+     res.send({success: false})
+  });
+
+})
+
+router.post('/lender/count',(req,res) => { // working
 	
 	 LendContract.methods.get_lenders_count().call({from: fromAccount})
     .then(function(receipt){
@@ -172,10 +207,10 @@ router.post('/lender/count',(req,res) => {
     });
 })
 
-router.post('/lender/get/:address',(req,res) => {
+router.post('/lender/get/:id',(req,res) => {
 
-	LendContract.methods.getLender(
-		req.params.address).call({from: fromAccount})
+	LendContract.methods.getLenderviaId(
+		req.params.id).call({from: fromAccount})
     .then(function(receipt){
 
     	if(!receipt) {
@@ -183,7 +218,7 @@ router.post('/lender/get/:address',(req,res) => {
     	}
 
     	console.log(receipt);
-    	res.send({success: true})           
+    	res.send({success: true,data: receipt})           
        
     }).catch(function(err){
       console.log(err)
@@ -191,41 +226,6 @@ router.post('/lender/get/:address',(req,res) => {
     });
 
 })
-
-router.post('/user/get/:id?',(req,res) => {
-
-	 if (!req.params.id) {
-
-        User.find({}, (err, item) => {
-            if (err) {
-                res.send({ success: false });
-                return console.error(err);
-            } else {
-             res.send({ success: true, data: item });
-            }
-        });
-
-	    }
-
-	    else {
-
-	       User.findOne({ _id: req.params.id }, (err, item) => {
-	        if (!item) {
-	            res.status(404).send({ success: false, message: 'User Id does not exists' });
-	            console.log("success");
-	        } else if(err) {
-	            console.log("error");
-	            res.status(404).send({ success: false });
-	            return console.error(err);
-	        } else {
-	            res.send({ success: true, data: item });
-	            console.log("success");
-	        }
-	    });
-
-	   }
-	
-});
 
 router.post('/check',(req,res) => {
 	console.log(LendContract)

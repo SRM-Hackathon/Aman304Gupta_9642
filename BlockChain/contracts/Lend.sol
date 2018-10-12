@@ -46,28 +46,31 @@ function getLenderviaId(uint256 _id) public view
 // see loan request -- from borrower's id -- but only see who is requesting loan
 
 function get_borrowers_count() public view returns(uint256) {
+ 
   return borrowers.length;
 }
 
 function get_lenders_count() public view returns(uint256) {
+  
   return lenders.length;
 }
 
-    function seeLoanRequest(uint256 _id) public view returns(uint256) {
-        return LoanRequest[_id]._value;
-    }
+function seeLoanRequest(uint256 _id) public view returns(uint256) {
+    
+    return LoanRequest[_id]._value;
+}
 // approve request -- and transfer tokens
-    function setLoanTerms(uint256 _id, uint256 period, uint256 Rinterest) public  returns(bool success) {
-      LoanRequest[_id].Lender = msg.sender;
-      LoanRequest[_id]._period = period;
-      LoanRequest[_id]._Rinterest = Rinterest;
-      /* uint256 borrowId = BuyAddtoId[borrower]; */
-      uint256 lenderId = LendAddtoId[msg.sender];
+function setLoanTerms(uint256 _id, uint256 period, uint256 Rinterest) public  returns(bool success) {
+  LoanRequest[_id].Lender = msg.sender;
+  LoanRequest[_id]._period = period;
+  LoanRequest[_id]._Rinterest = Rinterest;
+  /* uint256 borrowId = BuyAddtoId[borrower]; */
+  uint256 lenderId = LendAddtoId[msg.sender];
 
-      uint256 valueToBeSent = LoanRequest[_id]._value;
+  uint256 valueToBeSent = LoanRequest[_id]._value;
 
-      lenders[lenderId].amt_have -= valueToBeSent;
-      borrowers[_id].amt_have += valueToBeSent;
-      return true;
-    }
+  lenders[lenderId].amt_have -= valueToBeSent;
+  borrowers[_id].amt_have += valueToBeSent;
+  return true;
+}
 }
