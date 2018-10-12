@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "870636809537",
+    "firebase_url": "https://blockpal-a3307.firebaseio.com",
+    "project_id": "blockpal-a3307",
+    "storage_bucket": "blockpal-a3307.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:870636809537:android:cb59bd1bc7bfb382",
+        "android_client_info": {
+          "package_name": "blockcontract.blockpal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "870636809537-agrkk01k282rtduj4id99af5r9ggn86u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "blockcontract.blockpal",
+            "certificate_hash": "9935974b28b006ace2ec18ca89deab6845dd2d45"
+          }
+        },
+        {
+          "client_id": "870636809537-th1inovbh7me9s72ej1d7e084gjljl1k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmXHBX8aIO379Wh7Qas46llDjWTvG8dWE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "870636809537-th1inovbh7me9s72ej1d7e084gjljl1k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
