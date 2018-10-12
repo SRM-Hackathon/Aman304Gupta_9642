@@ -29,7 +29,7 @@ public class navigate extends AppCompatActivity {
                     fragment=new BuyerFragment();
                     break;
                 case R.id.navigation_sell:
-//                    fragment=new sell();
+                    fragment=new sell();
                     break;
                 case R.id.navigation_profile:
 //                    fragment=new profile();
