@@ -270,6 +270,15 @@ router.post('/borrower/list/add',(req,res) => { // working
 
 })
 
+router.post('/borrower/list/read',(req,res) => { // working
+
+  Borrow.findOne({ id: req.body.userid }).then(function(data) {
+            console.log("lender address pushed");
+            res.send({ success: true , data: data.lenders })
+  });
+
+})
+
 router.post('/lender/getby/:address',(req,res) => { // working
   
   LendContract.methods.getLender(
