@@ -31,8 +31,17 @@ contract Lend is Receiver { // Receiver import to see borrowers and loan request
         lenders[_id].name,
         lenders[_id].linkedInURL,
         lenders[_id].amt_have
-
       );
+}
+
+function getLenderviaId(uint256 _id) public view
+  returns(address,string,string, uint256) {
+    return (
+      lenders[_id].lenderId,
+      lenders[_id].name,
+      lenders[_id].linkedInURL,
+      lenders[_id].amt_have
+    );
 }
 // see loan request -- from borrower's id -- but only see who is requesting loan
 
