@@ -25,7 +25,9 @@
             android:name=".SignupActivity"
             android:theme="@style/AppTheme.Login"
             android:screenOrientation="portrait"></activity>
-
+        <activity android:name=".navigate"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

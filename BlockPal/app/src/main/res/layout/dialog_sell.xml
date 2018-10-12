@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="341dp"
+    android:layout_height="wrap_content"
+    android:paddingBottom="10dp">
+
+    <EditText
+        android:id="@+id/linkedin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/startupidea"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:ems="10"
+        android:hint="LinkedIn Url"
+        android:inputType="textMultiLine" />
+
+    <EditText
+        android:id="@+id/startupidea"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/startupname"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:ems="10"
+        android:hint="Startup Idea"
+        android:inputType="textMultiLine" />
+
+    <EditText
+        android:id="@+id/startupname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:ems="10"
+        android:hint="Startup name"
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/sell_button"
+        android:layout_width="78dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/slider"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/roundedbutton"
+        android:text="BORROW"
+        android:textColor="@color/cardview_light_background"
+        android:textSize="14sp" />
+
+    <com.ramotion.fluidslider.FluidSlider
+        android:id="@+id/slider"
+        android:layout_width="258dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linkedin"
+        android:layout_centerHorizontal="true"
+        android:elevation="2dp"
+        app:bar_color="#03A9F4"
+        app:size="small" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="222dp"
+        android:text="Slide the amount you want to borrow"
+        android:textSize="17sp" />
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:hint="Name"
+        android:inputType="textPersonName" />
+
+</RelativeLayout>

@@ -102,7 +102,7 @@ public class SignupActivity extends AppCompatActivity {
                                             System.out.println(signupResponse.getWalletAddress());
                                             wallet_address=signupResponse.getWalletAddress();
                                             if(signupResponse.getSuccess()){
-                                                User u = new User(username.getText().toString(), email.getText().toString(), meter_id.getText().toString(),wallet_address);
+                                                User u = new User(username.getText().toString(), email.getText().toString(),wallet_address);
                                                 databaseReference.child("user").child(FirebaseAuth.getInstance().getUid()).setValue(u);
                                                 sendVerification();
                                                 setResult(8);

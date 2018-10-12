@@ -6,9 +6,9 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
 public interface Signup_API {
-    String BASE_URL="http://localhost//";
+    String BASE_URL="http://13.233.83.25:7000/";
     @FormUrlEncoded
-    @POST("signUp")
+    @POST("signup")
     Call<SignupResponse> getResponse(@Field("username") String username,
                                      @Field("email") String email);
 }
