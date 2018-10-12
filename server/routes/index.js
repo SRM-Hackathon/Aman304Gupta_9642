@@ -26,7 +26,7 @@ const Buyer = LendBytecode.bytecode;
 const LenderABI = LendBytecode.abi;
 
 var fromAccount = web3.eth.accounts[0];
-const Lend_contract_address = "0x115d647dd4886949e183fa541bccd78f736a60d1"
+const Lend_contract_address = "0x7c17798fa996e62f6a0195b182099e971922d254"
 
 const LendContract = new web3.eth.Contract(
     LenderABI, 
@@ -45,7 +45,7 @@ web3.eth.getAccounts().then(accounts => {
    
 })
 
-router.post('/signup',(req,res) => {
+router.post('/signup',(req,res) => { // working
 
   web3.eth.getAccounts().then(accounts => {
       
@@ -72,65 +72,165 @@ router.post('/signup',(req,res) => {
 
 })
 
-router.post('/borrower/create',(req,res) => {
+router.post('/borrower/create',(req,res) => { // working
 
-  web3.eth.getAccounts().then(accounts => {
-      
-      console.log(accounts);
+  LendContract.methods.createBorrower(
+     req.body.name,
+     req.body.StartUpName, 
+     req.body.StartUpIdea, 
+     req.body.LinkedInUrl, 
+     req.body.amt).send({from: fromAccount,gasPrice: '20000000000',gas: 1500000})
+    .then(function(receipt){
 
-      db.User_Details.countDocuments({}).then(function(count){
-        console.log(count)
-        db.User_Details.create({
-          username: req.body.username,
-          email: req.body.email,
-          meterId: req.body.meterId,
-          walletAddress: accounts[count+1]
-        }).then(function(data){
-          res.send({walletAddress:data.walletAddress , success: true})
-        }).catch(function(err){ 
-             res.send({success: false})
-        })
-            
-      })
-   
-   })
+      if(!receipt) {
+        return res.send({message: 'No receipt generate',success: false})
+      }
+
+      console.log(receipt);
+      res.send({success: true})           
+       
+    }).catch(function(err){
+      console.log(err)
+       res.send({success: false})
+    });
 
 })
 
-router.post('/user/get/:id?',(req,res) => {
+router.post('/borrower/get/:id',(req,res) => { // working
+  LendContract.methods.getBorrower(req.params.id).call({from: fromAccount})
+          .then(function(v){
+            
+            console.log(JSON.stringify(v))
+            res.send({success: true,data: v})
+            
+            // db.User_Details.findOne({walletAddress: a.seller}).then(function(data){
+            //   if(!data) {
+            //     res.send({success: false,message: "Wallet Address Does not exists"})
+            //   }
+            //   else
+            //   {res.send({walletAddress: data.walletAddress , supply: a.supply ,username:  data.username})}
+            // })
+    }).catch(function(err){
+      res.send({success: false})
+      console.error(err)
+    })
 
-	 if (!req.params.id) {
+})
 
-        User.find({}, (err, item) => {
-            if (err) {
-                res.send({ success: false });
-                return console.error(err);
-            } else {
-             res.send({ success: true, data: item });
-            }
-        });
+router.post('/borrower/count',(req,res) => { // working
+  
+   LendContract.methods.get_borrowers_count().call({from: fromAccount})
+    .then(function(receipt){
+       
+       res.send({success: true,count: receipt})     
+        
+       
+    }).catch(function(err){
+      console.log(err)
+       res.send({success: false})
+    });
+})
 
-	    }
+router.post('/loan/create',(req,res) => { // working
 
-	    else {
+  LendContract.methods.createLoanRequest(
+     req.body.id,req.body.value).send({from: fromAccount,gasPrice: '20000000000',gas: 1500000})
+    .then(function(receipt){
 
-	       User.findOne({ _id: req.params.id }, (err, item) => {
-	        if (!item) {
-	            res.status(404).send({ success: false, message: 'User Id does not exists' });
-	            console.log("success");
-	        } else if(err) {
-	            console.log("error");
-	            res.status(404).send({ success: false });
-	            return console.error(err);
-	        } else {
-	            res.send({ success: true, data: item });
-	            console.log("success");
-	        }
-	    });
+      if(!receipt) {
+        return res.send({message: 'No receipt generate',success: false})
+      }
 
-	   }
+      console.log(receipt);
+      res.send({success: true})           
+       
+    }).catch(function(err){
+      console.log(err)
+       res.send({success: false})
+    });  
+
+})
+
+router.post('/seeLoanRequest/get/:id',(req,res) => {
+
+  LendContract.methods.seeLoanRequest(
+    req.params.id).call({from: fromAccount})
+    .then(function(receipt){
+
+      if(!receipt) {
+        return res.send({message: 'No receipt generate',success: false})
+      }
+
+      console.log(receipt);
+      res.send({success: true,data: receipt})           
+       
+    }).catch(function(err){
+      console.log(err)
+       res.send({success: false})
+    });
+
+})
+
+router.post('/lender/create',(req,res) => { // working
+
+  LendContract.methods.createLender(
+    req.body.name,
+    req.body.linkedInURL, 
+    req.body.amount).send({from: fromAccount,gasPrice: '20000000000',gas: 1500000})
+  .then(function(receipt){
+
+    if(!receipt) {
+      return res.send({message: 'No receipt generate',success: false})
+    }
+
+    console.log(receipt);
+    res.send({success: true})           
+     
+  }).catch(function(err){
+    console.log(err)
+     res.send({success: false})
+  });
+
+})
+
+router.post('/lender/count',(req,res) => { // working
 	
-});
+	 LendContract.methods.get_lenders_count().call({from: fromAccount})
+    .then(function(receipt){
+       
+       res.send({success: true,count: receipt})     
+        
+       
+    }).catch(function(err){
+      console.log(err)
+       res.send({success: false})
+    });
+})
+
+router.post('/lender/get/:id',(req,res) => {
+
+	LendContract.methods.getLenderviaId(
+		req.params.id).call({from: fromAccount})
+    .then(function(receipt){
+
+    	if(!receipt) {
+    		return res.send({message: 'No receipt generate',success: false})
+    	}
+
+    	console.log(receipt);
+    	res.send({success: true,data: receipt})           
+       
+    }).catch(function(err){
+      console.log(err)
+       res.send({success: false})
+    });
+
+})
+
+router.post('/check',(req,res) => {
+	console.log(LendContract)
+	res.send({success: true})
+})
 
 router.post('/test',(req,res) => {
 
