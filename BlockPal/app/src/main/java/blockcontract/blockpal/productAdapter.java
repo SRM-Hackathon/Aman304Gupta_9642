@@ -1,5 +1,5 @@
 package blockcontract.blockpal;
-/*Adapter for Sellers*/
+/*Adapter for Borrowers*/
 
 import android.app.Dialog;
 import android.content.Context;
@@ -27,11 +27,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class productAdapter extends RecyclerView.Adapter<productAdapter.ProductViewHolder> {
     private Context mcx;
-    private List<seller> sellerList;
+    private List<borrower> borrowerList;
 
-    public productAdapter(Context mcx, List<seller> sellerList) {
+    public productAdapter(Context mcx, List<borrower> borrowerList) {
         this.mcx = mcx;
-        this.sellerList = sellerList;
+        this.borrowerList = borrowerList;
     }
 
 
@@ -47,12 +47,12 @@ public class productAdapter extends RecyclerView.Adapter<productAdapter.ProductV
 
     @Override
     public void onBindViewHolder(final ProductViewHolder holder, int position) {
-        final seller seller=sellerList.get(position);
-        holder.textViewUsername.setText(seller.getUsername());
-        holder.textQuantity.setText(seller.getQuantity()+" Litres");
+         borrower borrower=borrowerList.get(position);
+        holder.textViewUsername.setText(borrower.getS1());
+        holder.textQuantity.setText(borrower.getS2());
 //        int price=Integer.parseInt(seller.getQuantity())*5;
-        holder.textViewPrice.setText("Rs."+seller.getQuantity());
-        holder.buy.setOnClickListener(new View.OnClickListener() {
+        holder.textViewPrice.setText(borrower.getS3());
+       /* holder.buy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final Dialog dialog=new Dialog(mcx);
@@ -115,13 +115,13 @@ public class productAdapter extends RecyclerView.Adapter<productAdapter.ProductV
                 });
                 dialog.show();
             }
-        });
+        });*/
 
     }
 
     @Override
     public int getItemCount() {
-        return sellerList.size();
+        return borrowerList.size();
     }
 
     class ProductViewHolder extends RecyclerView.ViewHolder{

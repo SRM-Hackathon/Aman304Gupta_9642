@@ -25,24 +25,24 @@ public class BuyerFragment extends Fragment {
 
     }
     Boolean success;
-    String count,s1,s2,s3;
+    String count,s1,s2,s3,s4,s5,s6;
     int count_int;
     RecyclerView recyclerView;
     productAdapter adapter;
-    List<seller> sellerList;
+    List<borrower> borrowersList;
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_seller,container,false);
-        sellerList=new ArrayList<>();
+        borrowersList=new ArrayList<>();
         recyclerView=(RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
 
         /* To fetch count from server--------------------*/
-        Retrofit retrofit = new Retrofit.Builder()
+       /* Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(countApi.Base_url)
                 .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
                 .build();
@@ -75,7 +75,7 @@ public class BuyerFragment extends Fragment {
                                 s2=sellerPojo.getSupply();
                                 s3=sellerPojo.getWalletAddress();
                                 System.out.println(s3);
-                                sellerList.add(new seller(s1, s2, s3));
+                                borrowersList.add(new borrower(s1, s2, s3,s4,s5,s6));
                                 adapter=new productAdapter(getActivity().getApplicationContext(),sellerList);
                                 recyclerView.setAdapter(adapter);
 
@@ -109,6 +109,65 @@ public class BuyerFragment extends Fragment {
 
 
         /*to add at last*/
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(borrowerCountApi.Base_Url)
+                .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
+                .build();
+
+        final borrowerCountApi api = retrofit.create(borrowerCountApi.class);
+         Call<borrowerCountPojo> call=api.getCount();
+        call.enqueue(new Callback<borrowerCountPojo>() {
+            @Override
+            public void onResponse(Call<borrowerCountPojo> call, Response<borrowerCountPojo> response) {
+
+                borrowerCountPojo borrowerCountPojo=response.body();
+                if(borrowerCountPojo.getSuccess()) {
+                    success = borrowerCountPojo.getSuccess();
+                    count = borrowerCountPojo.getCount();
+                    count_int=Integer.parseInt(count);
+                    Retrofit retrofit1 = new Retrofit.Builder()
+                            .baseUrl(borrowerApi.Base_Url)
+                            .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
+                            .build();
+                    borrowerApi api1=retrofit1.create(borrowerApi.class);
+                    for(int i=0;i<count_int;i++)
+                    {
+                        Call<borrowerPojo> call1 = api1.getBorrower(i);
+                        call1.enqueue(new Callback<borrowerPojo>() {
+                            @Override
+                            public void onResponse(Call<borrowerPojo> call, Response<borrowerPojo> response) {
+                                borrowerPojo borrowerPojo=response.body();
+                                s1=borrowerPojo.getData().get0();
+                                s2=borrowerPojo.getData().get1();
+                                s3=borrowerPojo.getData().get2();
+                                s4=borrowerPojo.getData().get3();
+                                s5=borrowerPojo.getData().get4();
+                                s6=borrowerPojo.getData().get5();
+                                borrowersList.add(new borrower(s1,s2,s3,s4,s5,s6));
+                                adapter=new productAdapter(getActivity().getApplicationContext(),borrowersList);//getActivity();
+                                recyclerView.setAdapter(adapter);
+
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<borrowerPojo> call, Throwable t) {
+
+                            }
+                        });
+                    }
+
+
+                }
+
+            }
+
+
+            @Override
+            public void onFailure(Call<borrowerCountPojo> call, Throwable t) {
+
+            }
+        });
 
         return view;
 
