@@ -115,39 +115,6 @@ public class sell extends Fragment {
 
             }
         });
-        Retrofit retrofit1 = new Retrofit.Builder()
-                .baseUrl(buyersApi.Base_Url)
-                .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
-                .build();
-        buyersApi api1=retrofit1.create(buyersApi.class);
-        Call<BuyersResponse> call=api1.getResponse();
-        call.enqueue(new Callback<BuyersResponse>() {
-            @Override
-            public void onResponse(Call<BuyersResponse> call, Response<BuyersResponse> response) {
-
-                CardView buyer_card=view.findViewById(R.id.card_buyers);
-                buyer_card.setVisibility(View.VISIBLE);
-                BuyersResponse BuyersResponse=response.body();
-                s1=BuyersResponse.getResidentAddress();
-                s2=BuyersResponse.getSupply();
-                s3=BuyersResponse.getUsername();
-                s4=BuyersResponse.getWalletAddress();
-                TextView username=view.findViewById(R.id.username);
-                TextView quantity=view.findViewById(R.id.quantity);
-                TextView total_price=view.findViewById(R.id.price);
-                TextView address=view.findViewById(R.id.address);
-                username.setText(s3);
-                quantity.setText(s2);
-                total_price.setText("Rs."+ String.valueOf(Integer.parseInt(s2)*5));
-                address.setText(s1);
-
-            }
-
-            @Override
-            public void onFailure(Call<BuyersResponse> call, Throwable t) {
-                //Toast.makeText(getContext(),"No buyers",Toast.LENGTH_LONG).show();
-            }
-        });
 
         return view;
 
