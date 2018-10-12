@@ -92,7 +92,7 @@ public class SignupActivity extends AppCompatActivity {
                                             .build();
 
                                     Signup_API api = retrofit.create(Signup_API.class);
-                                    Call<SignupResponse> call=api.getResponse(username.getText().toString(),email.getText().toString(),meter_id.getText().toString());
+                                    Call<SignupResponse> call=api.getResponse(username.getText().toString(),email.getText().toString());
                                     call.enqueue(new Callback<SignupResponse>() {
                                         @Override
                                         public void onResponse(Call<SignupResponse> call, Response<SignupResponse> response) {
