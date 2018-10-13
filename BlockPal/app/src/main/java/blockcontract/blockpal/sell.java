@@ -93,6 +93,15 @@ public class sell extends Fragment {
                 EditText startupname=dialog.findViewById(R.id.startupname);
                 EditText startupidea=dialog.findViewById(R.id.startupidea);
                 EditText linkedin_url=dialog.findViewById(R.id.linkedin);
+                Button upload=dialog.findViewById(R.id.upload_button);
+                upload.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        /***
+                         * rajnish tattu
+                         */
+                    }
+                });
                 sell.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
