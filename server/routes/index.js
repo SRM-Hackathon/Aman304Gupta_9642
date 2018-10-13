@@ -102,7 +102,7 @@ router.post('/borrower/get/:id',(req,res) => { // working
           .then(function(v){
             
             console.log(JSON.stringify(v))
-            res.send({success: true,data: v})
+            res.send({success: true,data: v,id: req.params.id})
     }).catch(function(err){
       res.send({success: false})
       console.error(err)
