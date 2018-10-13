@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.jjoe64.graphview.GraphView;
@@ -48,6 +49,29 @@ public class profile extends Fragment {
         s1=user.getWallet_address();//to pass this in the profile field
         username.setText(user.getUsername());
 
+        Retrofit retrofit3 = new Retrofit.Builder()
+                .baseUrl(amountget.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
+                .build();
+        amountget api3=retrofit3.create(amountget.class);
+        Call<amountresponse> call3=api3.getResponse(user.getEmail());
+        call3.enqueue(new Callback<amountresponse>() {
+            @Override
+            public void onResponse(Call<amountresponse> call, Response<amountresponse> response) {
+
+                amountresponse amountresponse=response.body();
+                Data1 data=amountresponse.getData1();
+                data.getAmount();
+
+                //now we can do whatever we want with this list
+
+            }
+
+            @Override
+            public void onFailure(Call<amountresponse> call, Throwable t) {
+//                Toast.makeText(mcx, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
         sign_out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

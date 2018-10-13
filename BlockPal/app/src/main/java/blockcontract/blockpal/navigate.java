@@ -32,7 +32,7 @@ public class navigate extends AppCompatActivity {
                     fragment=new sell();
                     break;
                 case R.id.navigation_profile:
-//                    fragment=new profile();
+                    fragment=new profile();
                     break;
                     }
             return loadFragment(fragment);
@@ -45,7 +45,7 @@ public class navigate extends AppCompatActivity {
         setContentView(R.layout.activity_navigate);
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-//        loadFragment(new BuyerFragment());
+        loadFragment(new BuyerFragment());
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference();
         DatabaseReference ref=databaseReference.child("user").child(user.getUid());
