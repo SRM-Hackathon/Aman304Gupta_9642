@@ -65,6 +65,7 @@ public class productAdapter extends RecyclerView.Adapter<productAdapter.ProductV
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.dialog_buy);
                 Button lend_button=dialog.findViewById(R.id.lend_button);
+                EditText linkedin=dialog.findViewById(R.id.name);
                 EditText period=dialog.findViewById(R.id.period);
                 EditText rate_int=dialog.findViewById(R.id.rate_int);
                 lend_button.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +79,30 @@ public class productAdapter extends RecyclerView.Adapter<productAdapter.ProductV
                                 .build();
                         buyApi api=retrofit.create(buyApi.class);
                         User user =Hawk.get("user");
+                        Retrofit retrofit1 = new Retrofit.Builder()
+                                .baseUrl(lendercreate.Base_Url)
+                                .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
+                                .build();
+                        lendercreate api1=retrofit1.create(lendercreate.class);
+                        Call<SuccessResponse> call1=api1.getResponse(user.getUsername(),linkedin.getText().toString(),100);
+                        call1.enqueue(new Callback<SuccessResponse>() {
+                            @Override
+                            public void onResponse(Call<SuccessResponse> call, Response<SuccessResponse> response) {
+
+                                SuccessResponse successResponse=response.body();
+                                if(successResponse.getSuccess())
+                                    Toast.makeText(mcx,"Linkedin",Toast.LENGTH_LONG).show();
+                                dialog.dismiss();
+                                //now we can do whatever we want with this list
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<SuccessResponse> call, Throwable t) {
+                                Toast.makeText(mcx, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }
+                        });
 //                        final int max = Integer.parseInt(borrower.getS6());
 //                        final int min = 10;
 //                        final int total = max - min;

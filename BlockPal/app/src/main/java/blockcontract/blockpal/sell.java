@@ -1,6 +1,7 @@
 package blockcontract.blockpal;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -97,9 +98,8 @@ public class sell extends Fragment {
                 upload.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        /***
-                         * rajnish tattu
-                         */
+
+
                     }
                 });
                 sell.setOnClickListener(new View.OnClickListener() {
