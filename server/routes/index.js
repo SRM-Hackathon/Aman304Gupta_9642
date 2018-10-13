@@ -8,8 +8,8 @@ const cors = require('cors');
 const Web3 = require('web3'); 
 const ipfs = require('../models/ipfs')
 
-const aws_access_key_id = "AKIAJUL5TZNDDNUCPLAA"
-const aws_secret_access_key = "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"
+const aws_access_key_id = ""
+const aws_secret_access_key = ""
 var multer = require('multer');
 var AWS = require('aws-sdk');
 var multerS3 = require('multer-s3')
