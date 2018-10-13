@@ -13,6 +13,9 @@ public class borrowerPojo {
     @SerializedName("data")
     @Expose
     private Data data;
+    @SerializedName("id")
+    @Expose
+    private String id;
 
     public Boolean getSuccess() {
         return success;
@@ -30,4 +33,13 @@ public class borrowerPojo {
         this.data = data;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
 }
+

@@ -134,64 +134,64 @@ public class sell extends Fragment {
 
             }
         });
-        Retrofit retrofit1 = new Retrofit.Builder()
-                .baseUrl(lenderCountApi.Base_Url)
-                .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
-                .build();
-
-        lenderCountApi api1=retrofit1.create(lenderCountApi.class);
-        Call<lenderCountPojo> call1 = api1.getCount(user.getEmail());
-        call1.enqueue(new Callback<lenderCountPojo>() {
-            @Override
-            public void onResponse(Call<lenderCountPojo> call, Response<lenderCountPojo> response) {
-
-                lenderCountPojo lenderCountPojo=response.body();
-                Toast.makeText(getActivity().getApplicationContext(),"reached",Toast.LENGTH_SHORT).show();
-                success = lenderCountPojo.getSuccess();
-                System.out.println(lenderCountPojo.getData().get(1)+"hello world"+lenderCountPojo.getData().size());
-            count_int=lenderCountPojo.getData().size();
-
-                System.out.println("/nhello world ---------------/n"+count_int);
-                Retrofit retrofit2 = new Retrofit.Builder()
-                        .baseUrl(lenderApi.Base_Url)
-                        .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
-                        .build();
-                lenderApi api2=retrofit2.create(lenderApi.class);
-                for(int i=0;i<count_int;i++)
-                { String id="ytdhjvhc";//hcode here
-                    Call<lenderPojo> call2=api2.getLender(id);
-                    call2.enqueue(new Callback<lenderPojo>() {
-                        @Override
-                        public void onResponse(Call<lenderPojo> call, Response<lenderPojo> response) {
-                            lenderPojo lenderPojo=response.body();
-                            s1=lenderPojo.getData().get0();
-                            s2=lenderPojo.getData().get1();
-                            s3=lenderPojo.getData().get2();
-                            s4=lenderPojo.getData().get3();
-                            lenderList.add(new lender(s1,s2,s3,s4));
-                            adapter=new lenderAdapter(getActivity().getApplicationContext(),lenderList);//getActivity();
-                            recyclerView.setAdapter(adapter);
-
-
-
-                        }
-
-                        @Override
-                        public void onFailure(Call<lenderPojo> call, Throwable t) {
-
-                        }
-                    });
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<lenderCountPojo> call, Throwable t) {
-
-            }
-        });
-
-
+//        Retrofit retrofit1 = new Retrofit.Builder()
+//                .baseUrl(lenderCountApi.Base_Url)
+//                .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
+//                .build();
+//
+//        lenderCountApi api1=retrofit1.create(lenderCountApi.class);
+//        Call<lenderCountPojo> call1 = api1.getCount(user.getEmail());
+//        call1.enqueue(new Callback<lenderCountPojo>() {
+//            @Override
+//            public void onResponse(Call<lenderCountPojo> call, Response<lenderCountPojo> response) {
+//
+//                lenderCountPojo lenderCountPojo=response.body();
+//                Toast.makeText(getActivity().getApplicationContext(),"reached",Toast.LENGTH_SHORT).show();
+//                success = lenderCountPojo.getSuccess();
+//                System.out.println(lenderCountPojo.getData().get(1)+"hello world"+lenderCountPojo.getData().size());
+//            count_int=lenderCountPojo.getData().size();
+//
+//                System.out.println("/nhello world ---------------/n"+count_int);
+//                Retrofit retrofit2 = new Retrofit.Builder()
+//                        .baseUrl(lenderApi.Base_Url)
+//                        .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
+//                        .build();
+//                lenderApi api2=retrofit2.create(lenderApi.class);
+//                for(int i=0;i<count_int;i++)
+//                { String id="0x80900317AF1CD10b4277CA76aC48AF8b932E674A";//hcode here
+//                    Call<lenderPojo> call2=api2.getLender(id);
+//                    call2.enqueue(new Callback<lenderPojo>() {
+//                        @Override
+//                        public void onResponse(Call<lenderPojo> call, Response<lenderPojo> response) {
+//                            lenderPojo lenderPojo=response.body();
+//                            s1=lenderPojo.getData().get0();
+//                            s2=lenderPojo.getData().get1();
+//                            s3=lenderPojo.getData().get2();
+//                            s4=lenderPojo.getData().get3();
+//                            lenderList.add(new lender(s1,s2,s3,s4));
+//                            adapter=new lenderAdapter(getActivity().getApplicationContext(),lenderList);//getActivity();
+//                            recyclerView.setAdapter(adapter);
+//
+//
+//
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<lenderPojo> call, Throwable t) {
+//
+//                        }
+//                    });
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<lenderCountPojo> call, Throwable t) {
+//
+//            }
+//        });
+//
+//
         return view;
 
     }
