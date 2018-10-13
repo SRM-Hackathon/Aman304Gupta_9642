@@ -133,12 +133,15 @@ public class BuyerFragment extends Fragment {
                     borrowerApi api1=retrofit1.create(borrowerApi.class);
                     for(i=0;i<count_int;i++)
                     {
+
+                        System.out.println(i);
+                        id=String.valueOf(i);
                         Call<borrowerPojo> call1 = api1.getBorrower(i);
                         call1.enqueue(new Callback<borrowerPojo>() {
                             @Override
                             public void onResponse(Call<borrowerPojo> call, Response<borrowerPojo> response) {
                                 borrowerPojo borrowerPojo=response.body();
-                                id=String.valueOf(i);
+
                                 s1=borrowerPojo.getData().get0();
                                 s2=borrowerPojo.getData().get1();
                                 s3=borrowerPojo.getData().get2();

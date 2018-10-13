@@ -4,12 +4,12 @@
     <item
         android:id="@+id/navigation_buy"
         android:icon="@drawable/ic_action_shopping_cart"
-        android:title="Buy" />
+        android:title="Lend" />
 
     <item
         android:id="@+id/navigation_sell"
         android:icon="@drawable/ic_action_sell"
-        android:title="Sell" />
+        android:title="Borrow" />
 
     <item
         android:id="@+id/navigation_profile"

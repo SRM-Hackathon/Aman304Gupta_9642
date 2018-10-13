@@ -5,35 +5,37 @@
     android:layout_height="wrap_content"
     android:padding="20dp">
 
+    <EditText
+        android:id="@+id/period"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:hint="Time Period"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/rate_int"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/period"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:hint="Rate of interest"
+        android:inputType="textPersonName" />
+
     <Button
         android:id="@+id/lend_button"
         android:layout_width="78dp"
         android:layout_height="30dp"
-        android:layout_below="@+id/slider_lend"
+        android:layout_below="@+id/rate_int"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/roundedbutton"
         android:text="LEND"
         android:textColor="@color/cardview_light_background"
         android:textSize="14sp" />
 
-    <com.ramotion.fluidslider.FluidSlider
-        android:id="@+id/slider_lend"
-        android:layout_width="258dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/linkedin"
-        android:layout_centerHorizontal="true"
-        android:elevation="2dp"
-        app:bar_color="#03A9F4"
-        app:size="small" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:text="Slide the amount you want to lend"
-        android:textSize="17sp" />
 </RelativeLayout>
