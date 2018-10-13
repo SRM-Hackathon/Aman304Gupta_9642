@@ -2,10 +2,59 @@ const express = require('express');
 const router = express.Router();
 const User = require("../models/user");
 const Borrow = require("../models/borrow");
+const Amount = require("../models/amount");
 const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const Web3 = require('web3'); 
+const ipfs = require('../models/ipfs')
+
+const aws_access_key_id = ""
+const aws_secret_access_key = ""
+var multer = require('multer');
+var AWS = require('aws-sdk');
+var multerS3 = require('multer-s3')
+
+var path = require('path');
+
+var storage =   multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, './uploads');
+  },
+  filename: function (req, file, callback) {
+    callback(null, file.originalname);
+  }
+});
+
+var upload = multer({ storage : storage}).single('photo');
+
+router.post('/api/photo',function(req,res){
+    upload(req,res,function(err) {
+      var filename=req.file.originalname;
+        if(err) {
+            return res.end("Error uploading file.");
+        }
+        res.send(JSON.stringify({value: '/upload/'+filename}));
+    });
+});
+
+AWS.config.update({
+    accessKeyId: aws_access_key_id,
+    secretAccessKey: aws_secret_access_key,
+    region: 'us-east-1'
+});
+
+var s3 = new AWS.S3();
+
+var upload = multer({
+    storage: multerS3({
+        s3: s3,
+        bucket: 'hire-webarch',
+        key: function(req, file, cb) {
+            cb(null, Date.now() + '-' + file.originalname)
+        }
+    })
+})
 
 router.use(bodyParser.urlencoded({ extended: true }))
 router.use(function(req, res, next) {
@@ -44,6 +93,37 @@ web3.eth.getAccounts().then(accounts => {
       fromAccount = accounts[0];
       console.log("success")
    
+})
+
+router.post('/api/upload', upload.single('photo') , (req, res) => { //  new company // only admin
+    console.log("Request body is");
+    console.log(req);
+    res.send({ path: req.file.location })
+})
+
+router.post('/api/amount/create',(req,res) => {
+
+  Amount.create({
+    email: req.body.email,
+    amount: req.body.amount,
+  }).then(function(data){
+    res.send({success: true})
+  }).catch(function(err){
+    res.send({success: false})
+    console.error(err)
+  })
+
+})
+
+router.post('/api/amount/get',(req,res) => {
+
+  Amount.findOne({email: req.body.email}).then(function(data){
+    res.send({success: true,data: data})
+  }).catch(function(err){
+    res.send({success: false})
+    console.error(err)
+  })
+
 })
 
 router.post('/signup',(req,res) => { // working
