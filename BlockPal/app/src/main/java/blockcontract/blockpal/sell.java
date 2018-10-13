@@ -1,8 +1,10 @@
 package blockcontract.blockpal;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 import com.orhanobut.hawk.Hawk;
 import com.ramotion.fluidslider.FluidSlider;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +42,7 @@ public class sell extends Fragment {
     lenderAdapter adapter;
     List<lender> lenderList;
     User user;
+    public static final int PICK_IMAGE = 1;
     public sell(){
 
     }
@@ -98,6 +102,11 @@ public class sell extends Fragment {
                 upload.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        Intent intent = new Intent();
+                        intent.setType("image/*");
+                        intent.setAction(Intent.ACTION_GET_CONTENT);
+                        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+
 
 
                     }
@@ -199,9 +208,29 @@ public class sell extends Fragment {
 //
 //            }
 //        });
+
+
 //
 //
         return view;
 
     }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == PICK_IMAGE) {
+
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    Toast.makeText(getActivity().getApplicationContext(),
+                            "Data is successfully uploaded.",
+                            Toast.LENGTH_LONG).show();
+                }
+            }, 3000);
+        }
+    }
+
+
 }
