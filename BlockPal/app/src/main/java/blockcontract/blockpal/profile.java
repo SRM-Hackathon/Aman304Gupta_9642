@@ -36,6 +36,8 @@ public class profile extends Fragment {
     String s1;
     Double bal;
     TextView wallet_address,username,wallet_balance;
+    int amm=0;
+
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_profile, container, false);
@@ -61,7 +63,7 @@ public class profile extends Fragment {
 
                 amountresponse amountresponse=response.body();
                 Data1 data=amountresponse.getData1();
-                wallet_balance.setText(data.getAmount());
+                amm=data.getAmount();
 
                 //now we can do whatever we want with this list
 
@@ -81,6 +83,7 @@ public class profile extends Fragment {
                 getActivity().finish();
             }
         });
+        wallet_balance.setText(amm);
         view_stats=view.findViewById(R.id.view_stats);
         view_stats.setOnClickListener(new View.OnClickListener() {
             @Override
