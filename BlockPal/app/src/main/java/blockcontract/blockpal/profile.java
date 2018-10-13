@@ -61,7 +61,7 @@ public class profile extends Fragment {
 
                 amountresponse amountresponse=response.body();
                 Data1 data=amountresponse.getData1();
-                data.getAmount();
+                wallet_balance.setText(data.getAmount());
 
                 //now we can do whatever we want with this list
 

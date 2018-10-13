@@ -8,6 +8,6 @@ import retrofit2.http.POST;
 public interface amountget {
     String BASE_URL="http://13.233.83.25:7000/";
     @FormUrlEncoded
-    @POST("amount/create")
+    @POST("api/amount/get")
     Call<amountresponse> getResponse(@Field("email")String email);
 }
