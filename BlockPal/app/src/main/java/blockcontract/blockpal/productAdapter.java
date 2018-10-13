@@ -56,7 +56,26 @@ public class productAdapter extends RecyclerView.Adapter<productAdapter.ProductV
         holder.textQuantity.setText(borrower.getS2());
 //        int price=Integer.parseInt(seller.getQuantity())*5;
         holder.textViewPrice.setText(borrower.getId());
+//        holder.textViewPrice.setText(borrower.getS3());
         System.out.println(borrower.getId());
+        holder.textViewPrice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Dialog dialog=new Dialog(mcx);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.dialog_idea);
+                TextView idea=dialog.findViewById(R.id.textidea);
+                idea.setText(borrower.getS3());
+                Button ok=dialog.findViewById(R.id.ok_button);
+                ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
+        });
         holder.buy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -147,8 +166,26 @@ public class productAdapter extends RecyclerView.Adapter<productAdapter.ProductV
 
                                 amountresponse amountresponse=response.body();
                                 Data1 data=amountresponse.getData1();
-                                diff=data.getAmount();
+//                                diff=data.getAmount();
+                                Call<SuccessResponse> call2=api2.getResponse(user.getEmail(),100-quantity);
+                                call2.enqueue(new Callback<SuccessResponse>() {
+                                    @Override
+                                    public void onResponse(Call<SuccessResponse> call, Response<SuccessResponse> response) {
 
+                                        SuccessResponse successResponse=response.body();
+                                        if(successResponse.getSuccess())
+                                            Toast.makeText(mcx,"Amount!!",Toast.LENGTH_LONG).show();
+                                        dialog.dismiss();
+                                        //now we can do whatever we want with this list
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<SuccessResponse> call, Throwable t) {
+                                        Toast.makeText(mcx, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                    }
+                                });
                                 dialog.dismiss();
                                 //now we can do whatever we want with this list
 
@@ -160,25 +197,7 @@ public class productAdapter extends RecyclerView.Adapter<productAdapter.ProductV
                                 dialog.dismiss();
                             }
                         });
-                        Call<SuccessResponse> call2=api2.getResponse(user.getEmail(),diff-quantity);
-                        call2.enqueue(new Callback<SuccessResponse>() {
-                            @Override
-                            public void onResponse(Call<SuccessResponse> call, Response<SuccessResponse> response) {
 
-                                SuccessResponse successResponse=response.body();
-                                if(successResponse.getSuccess())
-                                    Toast.makeText(mcx,"Amount!!",Toast.LENGTH_LONG).show();
-                                dialog.dismiss();
-                                //now we can do whatever we want with this list
-
-                            }
-
-                            @Override
-                            public void onFailure(Call<SuccessResponse> call, Throwable t) {
-                                Toast.makeText(mcx, t.getMessage(), Toast.LENGTH_SHORT).show();
-                                dialog.dismiss();
-                            }
-                        });
                         Call<SuccessResponse> call=api.getResponse(Integer.parseInt(borrower.getId()),Integer.parseInt(period.getText().toString()),Integer.parseInt(rate_int.getText().toString()));
                         call.enqueue(new Callback<SuccessResponse>() {
                             @Override

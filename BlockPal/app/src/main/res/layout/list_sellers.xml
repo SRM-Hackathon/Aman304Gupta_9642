@@ -52,7 +52,7 @@
                 android:fontFamily="@font/nunito_semibold"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
-                android:text="Quantity:"
+                android:text="Company:"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="15sp" />
 
@@ -67,7 +67,7 @@
                 android:fontFamily="@font/nunito_semibold"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
-                android:text="Total Price:"
+                android:text="Idea:"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="15sp" />
 
@@ -87,7 +87,9 @@
                 android:layout_below="@+id/quan_textView"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
-                android:text="0.002 ETH"
+                android:text="Idea"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:textSize="15sp" />
         </RelativeLayout>
     </android.support.v7.widget.CardView>

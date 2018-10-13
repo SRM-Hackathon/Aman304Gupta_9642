@@ -45,7 +45,7 @@ public class profile extends Fragment {
         sign_out=view.findViewById(R.id.sign_out);
         wallet_address=view.findViewById(R.id.wallet_address);
         username=view.findViewById(R.id.user_name);
-        wallet_balance=view.findViewById(R.id.wallet_bal);
+        wallet_balance=view.findViewById(R.id.water_bal);
         User user=Hawk.get("user");
         wallet_address.setText(user.getWallet_address());
         s1=user.getWallet_address();//to pass this in the profile field
@@ -83,7 +83,7 @@ public class profile extends Fragment {
                 getActivity().finish();
             }
         });
-        wallet_balance.setText(amm);
+        wallet_balance.setText(String.valueOf(amm)+" ETH");
         view_stats=view.findViewById(R.id.view_stats);
         view_stats.setOnClickListener(new View.OnClickListener() {
             @Override
