@@ -262,10 +262,20 @@ router.post('/loanterms/create',(req,res) => { // working
 
 router.post('/borrower/list/add',(req,res) => { // working
 
-  Borrow.update({ id: req.body.userid }, { $push: { lenders: req.body.lenderaddress } }).then(function(data) {
+  Borrow.findOne({id: req.body.userid}).then(function(data){
+    if(!data) {
+                  console.log("lender address pushed");
+
+      Borrow.create({ id: req.body.userid , lenders: req.body.lenderaddress } ).then(function(data) {
+            res.send({ success: true })
+    });
+    }else {
+      Borrow.update({ id: req.body.userid }, { $push: { lenders: req.body.lenderaddress } }).then(function(data) {
             console.log("lender address pushed");
             res.send({ success: true })
   });
+    }
+  })
 
 })
 
@@ -350,6 +360,6 @@ module.exports = router;
 
 ipfs
 automation
-
+0x3df5e8d13ca2c46119e9569f89e1867fdc213e9b
 */
  
