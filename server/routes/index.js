@@ -6,6 +6,31 @@ const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const Web3 = require('web3'); 
+const ipfs = require('../models/ipfs')
+
+const aws_access_key_id = "AKIAJUL5TZNDDNUCPLAA"
+const aws_secret_access_key = "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"
+var multer = require('multer');
+var AWS = require('aws-sdk');
+var multerS3 = require('multer-s3')
+
+AWS.config.update({
+    accessKeyId: aws_access_key_id,
+    secretAccessKey: aws_secret_access_key,
+    region: 'us-east-1'
+});
+
+var s3 = new AWS.S3();
+
+var upload = multer({
+    storage: multerS3({
+        s3: s3,
+        bucket: 'hire-webarch',
+        key: function(req, file, cb) {
+            cb(null, Date.now() + '-' + file.originalname)
+        }
+    })
+})
 
 router.use(bodyParser.urlencoded({ extended: true }))
 router.use(function(req, res, next) {
@@ -44,6 +69,12 @@ web3.eth.getAccounts().then(accounts => {
       fromAccount = accounts[0];
       console.log("success")
    
+})
+
+router.post('/api/upload', upload.single('photo') , (req, res) => { //  new company // only admin
+    console.log("Request body is");
+    console.log(req);
+    res.send({ path: req.file.location })
 })
 
 router.post('/signup',(req,res) => { // working
