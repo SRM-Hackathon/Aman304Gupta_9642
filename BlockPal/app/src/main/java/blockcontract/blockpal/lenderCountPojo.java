@@ -4,14 +4,16 @@ package blockcontract.blockpal;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class lenderCountPojo {
 
     @SerializedName("success")
     @Expose
     private Boolean success;
-    @SerializedName("count")
+    @SerializedName("data")
     @Expose
-    private String count;
+    private List<String> data = null;
 
     public Boolean getSuccess() {
         return success;
@@ -21,11 +23,11 @@ public class lenderCountPojo {
         this.success = success;
     }
 
-    public String getCount() {
-        return count;
+    public List<String> getData() {
+        return data;
     }
 
-    public void setCount(String count) {
-        this.count = count;
+    public void setData(List<String> data) {
+        this.data = data;
     }
 }

@@ -49,4 +49,5 @@ public class lenderData {
     public void set3(String _3) {
         this._3 = _3;
     }
+
 }

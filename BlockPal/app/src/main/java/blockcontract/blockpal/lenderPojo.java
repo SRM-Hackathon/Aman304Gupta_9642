@@ -27,5 +27,4 @@ public class lenderPojo {
     public void setData(Data data) {
         this.data = data;
     }
-
 }
