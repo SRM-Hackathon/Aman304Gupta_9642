@@ -25,7 +25,7 @@
                 android:layout_marginEnd="34dp"
                 android:background="@drawable/roundedbutton"
                 android:elevation="10dp"
-                android:text="BUY"
+                android:text="LEND"
                 android:textColor="@color/cardview_light_background"
                 android:textSize="13sp" />
 
