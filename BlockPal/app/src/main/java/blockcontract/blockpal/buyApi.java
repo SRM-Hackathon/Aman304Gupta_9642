@@ -8,7 +8,8 @@ import retrofit2.http.POST;
 public interface buyApi {
     String BASE_URL="http://13.233.83.25:7000/";
     @FormUrlEncoded
-    @POST("/loan/create")
-    Call<SuccessResponse> getResponse(@Field("id") String id,
-                                      @Field("value") int value);
+    @POST("loanterms/create")
+    Call<SuccessResponse> getResponse(@Field("userid") int userid,
+                                      @Field("period") int period,
+                                      @Field("Rinterest") int Rinterest);
 }
