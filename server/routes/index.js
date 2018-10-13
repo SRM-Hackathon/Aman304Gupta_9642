@@ -282,8 +282,13 @@ router.post('/borrower/list/add',(req,res) => { // working
 router.post('/borrower/list/read',(req,res) => { // working
 
   Borrow.findOne({ id: req.body.userid }).then(function(data) {
+      if(data) {
             console.log("lender address pushed");
             res.send({ success: true , data: data.lenders })
+          } else {
+            res.send({success: true, data: []})
+          }
+        
   });
 
 })
@@ -360,6 +365,6 @@ module.exports = router;
 
 ipfs
 automation
-0x3df5e8d13ca2c46119e9569f89e1867fdc213e9b
+0x208b72566c9b358e2857db661dad77ab1befe3be
 */
  
