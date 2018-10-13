@@ -5,6 +5,17 @@
     android:layout_height="wrap_content"
     android:paddingBottom="10dp">
 
+    <Button
+        android:id="@+id/upload_button"
+        android:layout_width="78dp"
+        android:layout_height="30dp"
+        android:layout_alignEnd="@+id/slider"
+        android:layout_alignTop="@+id/sell_button"
+        android:background="@drawable/roundedbutton"
+        android:text="Upload"
+        android:textColor="@color/cardview_light_background"
+        android:textSize="14sp" />
+
     <EditText
         android:id="@+id/linkedin"
         android:layout_width="wrap_content"

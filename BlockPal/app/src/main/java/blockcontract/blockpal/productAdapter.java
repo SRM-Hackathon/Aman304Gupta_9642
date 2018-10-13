@@ -60,6 +60,7 @@ public class productAdapter extends RecyclerView.Adapter<productAdapter.ProductV
         holder.buy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 final Dialog dialog=new Dialog(mcx);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.dialog_buy);
@@ -69,6 +70,7 @@ public class productAdapter extends RecyclerView.Adapter<productAdapter.ProductV
                 lend_button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
                         Hawk.init(mcx).build();
                         Retrofit retrofit = new Retrofit.Builder()
                                 .baseUrl(buyApi.BASE_URL)
