@@ -31,7 +31,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class productAdapter extends RecyclerView.Adapter<productAdapter.ProductViewHolder> {
     private Context mcx;
     private List<borrower> borrowerList;
-    int quantity;
+    int quantity,diff;
 
     public productAdapter(Context mcx, List<borrower> borrowerList) {
         this.mcx = mcx;
@@ -84,6 +84,17 @@ public class productAdapter extends RecyclerView.Adapter<productAdapter.ProductV
                                 .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
                                 .build();
                         lendercreate api1=retrofit1.create(lendercreate.class);
+
+                        Retrofit retrofit2 = new Retrofit.Builder()
+                                .baseUrl(amount.BASE_URL)
+                                .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
+                                .build();
+                        amount api2=retrofit2.create(amount.class);
+                        Retrofit retrofit3 = new Retrofit.Builder()
+                                .baseUrl(amountget.BASE_URL)
+                                .addConverterFactory(GsonConverterFactory.create()) //Here we are using the GsonConverterFactory to directly convert json data to object
+                                .build();
+                        amountget api3=retrofit3.create(amountget.class);
                         Call<SuccessResponse> call1=api1.getResponse(user.getUsername(),linkedin.getText().toString(),100);
                         call1.enqueue(new Callback<SuccessResponse>() {
                             @Override
@@ -103,32 +114,71 @@ public class productAdapter extends RecyclerView.Adapter<productAdapter.ProductV
                                 dialog.dismiss();
                             }
                         });
-//                        final int max = Integer.parseInt(borrower.getS6());
-//                        final int min = 10;
-//                        final int total = max - min;
-//
-//                        final FluidSlider slider = dialog.findViewById(R.id.slider_lend);
-//                        slider.setBeginTrackingListener(new Function0<Unit>() {
-//                            @Override
-//                            public Unit invoke() {
-//                                return Unit.INSTANCE;
-//                            }
-//                        });
-//
-//                        slider.setEndTrackingListener(new Function0<Unit>() {
-//                            @Override
-//                            public Unit invoke() {
-//                                return Unit.INSTANCE;
-//                            }
-//                        });
-//
-//                        // Java 8 lambda
-//                        slider.setPositionListener(pos -> {
-//                            final String value = String.valueOf((int) (min + total * pos));
-//                            slider.setBubbleText(value);
-//                            quantity= Integer.parseInt(value);
-//                            return Unit.INSTANCE;
-//                        });
+                        final int max = Integer.parseInt(borrower.getS6());
+                        final int min = 10;
+                        final int total = max - min;
+
+                        final FluidSlider slider = dialog.findViewById(R.id.slider_lend);
+                        slider.setBeginTrackingListener(new Function0<Unit>() {
+                            @Override
+                            public Unit invoke() {
+                                return Unit.INSTANCE;
+                            }
+                        });
+
+                        slider.setEndTrackingListener(new Function0<Unit>() {
+                            @Override
+                            public Unit invoke() {
+                                return Unit.INSTANCE;
+                            }
+                        });
+
+                        // Java 8 lambda
+                        slider.setPositionListener(pos -> {
+                            final String value = String.valueOf((int) (min + total * pos));
+                            slider.setBubbleText(value);
+                            quantity= Integer.parseInt(value);
+                            return Unit.INSTANCE;
+                        });
+                        Call<amountresponse> call3=api3.getResponse(user.getEmail());
+                        call3.enqueue(new Callback<amountresponse>() {
+                            @Override
+                            public void onResponse(Call<amountresponse> call, Response<amountresponse> response) {
+
+                                amountresponse amountresponse=response.body();
+                                Data1 data=amountresponse.getData1();
+                                diff=data.getAmount();
+
+                                dialog.dismiss();
+                                //now we can do whatever we want with this list
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<amountresponse> call, Throwable t) {
+                                Toast.makeText(mcx, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }
+                        });
+                        Call<SuccessResponse> call2=api2.getResponse(user.getEmail(),diff-quantity);
+                        call2.enqueue(new Callback<SuccessResponse>() {
+                            @Override
+                            public void onResponse(Call<SuccessResponse> call, Response<SuccessResponse> response) {
+
+                                SuccessResponse successResponse=response.body();
+                                if(successResponse.getSuccess())
+                                    Toast.makeText(mcx,"Amount!!",Toast.LENGTH_LONG).show();
+                                dialog.dismiss();
+                                //now we can do whatever we want with this list
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<SuccessResponse> call, Throwable t) {
+                                Toast.makeText(mcx, t.getMessage(), Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }
+                        });
                         Call<SuccessResponse> call=api.getResponse(Integer.parseInt(borrower.getId()),Integer.parseInt(period.getText().toString()),Integer.parseInt(rate_int.getText().toString()));
                         call.enqueue(new Callback<SuccessResponse>() {
                             @Override

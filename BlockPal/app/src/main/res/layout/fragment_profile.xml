@@ -9,11 +9,11 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_above="@+id/user_name"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
+        android:layout_marginBottom="-219dp"
         app:srcCompat="@drawable/profile_img" />
 
     <TextView
@@ -67,8 +67,8 @@
                 android:id="@+id/wallet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/water_balance"
-                android:layout_below="@+id/water_balance"
+                android:layout_alignStart="@+id/amount"
+                android:layout_below="@+id/amount"
                 android:layout_marginTop="20dp"
                 android:fontFamily="sans-serif-condensed"
                 android:text="Wallet Address:"
@@ -88,14 +88,14 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/water_balance"
+                android:id="@+id/amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignTop="@+id/water_bal"
                 android:layout_marginStart="36dp"
                 android:fontFamily="sans-serif-condensed"
-                android:text="Water Balance:"
+                android:text="Amount:"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -107,7 +107,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginEnd="30dp"
                 android:layout_marginTop="20dp"
-                android:text="135 Litres"
+                android:text="2ETH"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
